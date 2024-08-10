@@ -36,11 +36,11 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -var="core_count=1" -var="thread_count=2"
+      run: terraform plan
 
     - name: Apply Terraform (on push to main)
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: terraform apply -var="core_count=1" -var="thread_count=2" -auto-approve
+      run: terraform apply -auto-approve
 
   destroy:
     name: Terraform Destroy
@@ -73,7 +73,7 @@ jobs:
       run: terraform plan -destroy -out=destroy.plan
 
     - name: Terraform Destroy
-      run: terraform destroy -var="core_count=1" -var="thread_count=2" -auto-approve
+      run: terraform destroy -auto-approve
 
     - name: Output Terraform State
       run: terraform show
